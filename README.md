@@ -1,4 +1,4 @@
-#AirBean
+# AirBean
 
 ## React + TypeScript + Vite
 
