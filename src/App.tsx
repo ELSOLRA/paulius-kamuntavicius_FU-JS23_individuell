@@ -1,6 +1,6 @@
 
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import './App.css';
+
 import HomePage from './pages/HomePage';
 import MenuPage from './pages/MenuPage';
 import Nav from './components/Nav/Nav';
@@ -17,7 +17,7 @@ function App() {
           path='/menu'
           element={
             <>
-              <Nav />
+              {/* <Nav /> */}
               <MenuPage />
             </>
           }

@@ -17,14 +17,16 @@ const Nav: React.FC = () => {
 
   return (
     <section className={`nav ${isOpen ? 'nav--overlay' : ''}`}>
+      <div className="nav__img-container">
       <img
-        className="nav__btn"
+        className="nav__img"
         src={navIconPath}
         alt="Navigation"
         onClick={handleClick}
       />
+      </div>
       {isOpen && (
-        <nav>
+        <nav className="nav__links">
           <Link to='/'>Let's land</Link>
           <Link to='/about' onClick={() => toggleNav()}>About</Link>
           <Link to='/profile' onClick={() => toggleNav()}>Profile</Link>

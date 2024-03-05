@@ -1,0 +1,65 @@
+body {
+  max-width: none;
+  margin: 0;
+}
+
+.landing-container {
+    display: flex;
+    justify-content: space-between;
+
+    &__left-img,
+    &__right-img {
+
+        height: 100vh;
+        z-index: 3;
+    }
+
+    &__header {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(56, 132, 109, 1);
+
+        &__link {
+/*          position: relative;
+            top: 23px;   
+            left: 35px; */  //  this positioning should be if followed every millimeter
+            z-index: 3;
+            cursor: pointer;
+            border-radius: 50%;
+            animation: smoothPulsing 3s infinite cubic-bezier(0.4, 0, 0.6, 1); //  smoother pulsing animation
+            transition: transform 0.2s ease-in-out, border 0.5s ease-in-out, outline 0.5s ease-in-out;
+            backdrop-filter: blur(0.05rem);
+            width: 17rem;
+            height: 17rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &__icon {
+           
+            display: block; 
+            width: 100%; 
+            height: auto;
+        }
+
+    }
+}
+
+
+
+/* @keyframes smoothPulsing {
+    0%, 100% {
+      transform: scale(1);
+      border: 1.5rem solid transparent;
+    }
+    50% {
+      transform: scale(1.15);
+      border: 1.5rem solid rgba(0, 0, 0, 0.015);
+    }
+  } */
