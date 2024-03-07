@@ -25,15 +25,16 @@ const Nav: React.FC = () => {
         onClick={handleClick}
       />
       </div>
+      <nav className="nav__links">
       {isOpen && (
-        <nav className="nav__links">
-          <Link to='/'>Let's land</Link>
+        <>
+          <Link to='/' onClick={() => toggleNav()}>Let's land</Link>
           <Link to='/about' onClick={() => toggleNav()}>About</Link>
           <Link to='/profile' onClick={() => toggleNav()}>Profile</Link>
           <Link to='/status' onClick={() => toggleNav()}>Oder status</Link>
-        </nav>
+       </>
       )}
-
+         </nav>
     </section>
   )
 }

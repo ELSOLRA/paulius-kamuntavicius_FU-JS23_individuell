@@ -1,0 +1,13 @@
+.loader-container {
+
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 4rem;
+    font-weight: 900;
+
+    &__loader {
+        background-color: black;
+        border-radius: 50%;
+    }
+}

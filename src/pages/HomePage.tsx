@@ -15,12 +15,7 @@ const HomePage = () => {
           src={left}
           alt="left-side image"
         />
-        <img
-          className="landing-container__right-img"
-          src={right}
-          alt="right-side image"
-        />
-        <section className="landing-container__header">
+                <section className="landing-container__header">
           < Link className="landing-container__header__link" to= "/menu">
             <img 
             className="landing-container__header__icon"
@@ -29,6 +24,12 @@ const HomePage = () => {
           </Link>
 
         </section>
+        <img
+          className="landing-container__right-img"
+          src={right}
+          alt="right-side image"
+        />
+
 
       </section>
     </section>
