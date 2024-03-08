@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import useCoffeeMenuState from "../store/CoffeeMenuStore";
+import useCoffeeMenuState from "../store/useCoffeeMenuStore";
 import fetchCoffeeMenu from "../services/apiService";
 import Loader from "./common/Loader";
+import useCartStore from "../store/useCartStore";
+import { MenuItem } from "../store/storeTypes";
 
 type CoffeeMenuProp = {
     addIconPath: string;
@@ -10,6 +12,7 @@ type CoffeeMenuProp = {
 const CoffeeMenuComponent: React.FC<CoffeeMenuProp> = ({addIconPath}) => {
     const { menu, setMenu } = useCoffeeMenuState();
     const [loading, setLoading] = useState(false);
+    const { addToCart } = useCartStore();
 
 useEffect(() => {
     const fetchData = async () => {
@@ -30,8 +33,10 @@ useEffect(() => {
     fetchData();
   }, [setMenu]);
 
-  const handleClick = () => {
+  const handleClick = (item : MenuItem) => {
 
+    addToCart(item)
+    console.log(item)
   }
 
 
@@ -50,8 +55,8 @@ useEffect(() => {
                   <img
                   className="nav__img"
                   src={addIconPath}
-                  alt="Navigation"
-                  onClick={handleClick}
+                  alt="Add icon image"
+                  onClick={() => handleClick(item)}
                 />
 
               <strong>{item.title}</strong>

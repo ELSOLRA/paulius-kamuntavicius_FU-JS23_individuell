@@ -1,12 +1,5 @@
 import { create } from "zustand";
-
-
-type MenuItem = {
-    id: string;
-    title: string;
-    desc: string;
-    price: number; 
-}
+import { MenuItem } from "./storeTypes";
 
 type CoffeeMenuState = {
     menu: MenuItem[];

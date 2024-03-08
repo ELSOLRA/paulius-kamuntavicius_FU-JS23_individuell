@@ -1,19 +1,15 @@
 import { Link } from "react-router-dom";
-import useNavStore from "../../store/store";
+import useNavStore from "../../store/useNavStore";
 import '../../sass/nav.scss'
-
-
 
 
 const Nav: React.FC = () => {
 
-  const { isOpen, toggleNav } = useNavStore();
+  const { isOpen, toggle } = useNavStore();
 
   const navIconPath = isOpen? "src/assets/svg/closeicon.svg" : "src/assets/svg/navicon.svg";
 
-  const handleClick = () => {
-    toggleNav();
-  }
+
 
   return (
     <section className={`nav ${isOpen ? 'nav--overlay' : ''}`}>
@@ -22,16 +18,17 @@ const Nav: React.FC = () => {
         className="nav__img"
         src={navIconPath}
         alt="Navigation"
-        onClick={handleClick}
+        onClick={()=> toggle()}
       />
       </div>
       <nav className="nav__links">
       {isOpen && (
         <>
-          <Link to='/' onClick={() => toggleNav()}>Let's land</Link>
-          <Link to='/about' onClick={() => toggleNav()}>About</Link>
-          <Link to='/profile' onClick={() => toggleNav()}>Profile</Link>
-          <Link to='/status' onClick={() => toggleNav()}>Oder status</Link>
+          <Link to='/' onClick={() => toggle()}>Let's land</Link>
+          <Link to='/menu' onClick={() => toggle()}>Menu</Link>
+          <Link to='/about' onClick={() => toggle()}>About</Link>
+          <Link to='/profile' onClick={() => toggle()}>Profile</Link>
+          <Link to='/status' onClick={() => toggle()}>Oder status</Link>
        </>
       )}
          </nav>

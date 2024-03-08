@@ -1,12 +1,8 @@
-import "../../sass/header.scss"
+import "../../../sass/header.scss"
+import { HeaderProps } from "./headerTypes"
 
-type HeaderProps = {
 
-    headerImage: string;
-    leftComponent?: React.ReactNode;
-    rightComponent?: React.ReactNode;
 
-}
 
 const Header: React.FC<HeaderProps> = ({ leftComponent, rightComponent, headerImage }) => {
 
