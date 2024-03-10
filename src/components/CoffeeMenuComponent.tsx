@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import useCoffeeMenuState from "../store/useCoffeeMenuStore";
-import fetchCoffeeMenu from "../services/apiService";
+
 import Loader from "./common/Loader";
 import useCartStore from "../store/useCartStore";
 import { MenuItem } from "../store/storeTypes";
+import fetchCoffeeMenu from "../services/coffeeMenuService";
 
 type CoffeeMenuProp = {
     addIconPath: string;
@@ -33,11 +34,10 @@ useEffect(() => {
     fetchData();
   }, [setMenu]);
 
-  const handleClick = (item : MenuItem) => {
-
-    addToCart(item)
-    console.log(item)
-  }
+  const handleClick = (item: MenuItem) => {
+    addToCart(item);
+    console.log("Item added to cart:", item);
+  };
 
 
 

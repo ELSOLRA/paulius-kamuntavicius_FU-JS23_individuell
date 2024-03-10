@@ -1,24 +1,29 @@
 
-const fetchCoffeeMenu = async (/* setLoading: React.Dispatch<React.SetStateAction<boolean>> */) => {
+const apiUrl = 'https://airbean-api-xjlcn.ondigitalocean.app';
+
+const submitOrder = async (orderData: any) => {
+
     try {
-    //   setLoading(true);
-  
-  const response = await fetch('https://airbean-api-xjlcn.ondigitalocean.app/api/beans/', {
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to fetch coffee menu');
-      }
-  
-      const data = await response.json();
-      return data.menu;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    } 
-  };
-  
-  export default fetchCoffeeMenu ;
+        const response = await fetch (`${apiUrl}/api/beans/order`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error submitting : ${response.statusText}`);
+          }
+
+        return await response.json();
+
+        
+    }  catch (error:any) {
+        throw new Error(`Error submitting : ${error.message}`);
+    }
+
+};
+
+export default submitOrder;

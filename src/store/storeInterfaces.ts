@@ -5,11 +5,15 @@ export interface State {
     toggle: () => void;
 }
 
+
+
 export interface CartStore extends State {
   
   cartItems: MenuItem[];
+  
   totalPrice: number 
   totalItems: number;
+  // toggleCartItems: () => void;
   addToCart: (item: MenuItem) => void;
   // updateCartItem: (id: string, quantity: number) => void;
   increaseQuantity: (id: string) => void;

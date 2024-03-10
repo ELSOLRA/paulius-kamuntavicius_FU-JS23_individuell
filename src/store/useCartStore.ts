@@ -2,17 +2,32 @@ import { create } from "zustand";
 import { CartStore } from "./storeInterfaces";
 import { MenuItem } from "./storeTypes";
 
+
+const calculateTotals = (cartItems: MenuItem[]): { totalItems: number; totalPrice: number } => {
+  const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
+  const totalPrice = cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0);
+  return { totalItems, totalPrice }
+};
+
+const findItem =(items: MenuItem[], id: string) => {
+  const foundItem = items.find((item) => item.id === id);
+
+  console.log("Found Item:", foundItem);
+  return foundItem;
+}
+
+
 const useCartStore = create<CartStore>((set) => ({
   isOpen: false,
   cartItems: [],
+  
   totalPrice: 0,
   totalItems: 0,
-  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+  toggle: () => set((state) => ({ isOpen: !state.isOpen, showCartItems: !state.isOpen })),
+  
   addToCart: (item: MenuItem) => {
     set((state) => {
-      const existingItem = state.cartItems.find(
-        (cartItem) => cartItem.id === item.id
-      );
+      const existingItem = findItem(state.cartItems, item.id)
 
       let updatedCartItems;
 
@@ -26,38 +41,19 @@ const useCartStore = create<CartStore>((set) => ({
         updatedCartItems = [...state.cartItems, { ...item, quantity: 1 }];
       }
 
-      const totalItems = updatedCartItems.reduce(
-        (total, item) => total + (item.quantity || 0),
-        0
-      );
-      const totalPrice = updatedCartItems.reduce(
-        (total, item) => total + (item.price || 0) * (item.quantity || 0),
-        0
-      );
+      const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
 
-      return { cartItems: updatedCartItems, totalPrice, totalItems };
+      return { cartItems: updatedCartItems, totalPrice, totalItems } as CartStore;
     });
   },
-  /*  updateCartItem: (id, quantity) =>
-    set((state) => ({
-      cartItems: state.cartItems.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      ),
-    })), */
+
   increaseQuantity: (id: string) => {
     set((state) => {
       const updatedCartItems = state.cartItems.map((item) =>
         item.id === id ? { ...item, quantity: (item.quantity || 0) + 1 } : item
       );
 
-      const totalItems = updatedCartItems.reduce(
-        (total, item) => total + (item.quantity || 0),
-        0
-      );
-      const totalPrice = updatedCartItems.reduce(
-        (total, item) => total + (item.price || 0) * (item.quantity || 0),
-        0
-      );
+      const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
 
       return { cartItems: updatedCartItems, totalPrice, totalItems };
     });
@@ -72,34 +68,20 @@ const useCartStore = create<CartStore>((set) => ({
         )
         .filter((item) => (item.quantity || 0) > 0);
 
-      const totalItems = updatedCartItems.reduce(
-        (total, item) => total + (item.quantity || 0),
-        0
-      );
-      const totalPrice = updatedCartItems.reduce(
-        (total, item) => total + (item.price || 0) * (item.quantity || 0),
-        0
-      );
+        const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
 
       return { cartItems: updatedCartItems, totalPrice, totalItems };
     });
   },
-  /*             calculateTotalPrice: () =>
-            set((state) => ({
-                totalPrice: state.cartItems.reduce(
-                    (total, item) => total + (item.price || 0) * (item.quantity || 0),
-                    0
-                    ),
-                })), */
-  /*   decreaseQuantity: (id) =>
-                    set((state) => ({
-                      cartItems: state.cartItems.map((item) =>
-                        item.id === id
-                          ? { ...item, quantity: Math.max(0, (item.quantity || 0) - 1) }
-                          : item
-                      ),
-                      
-                    })), */
 }));
+
+
+export const resetCart = () => {
+  useCartStore.setState({
+    cartItems: [],
+    totalItems: 0,
+    totalPrice: 0, 
+  });
+};
 
 export default useCartStore;
