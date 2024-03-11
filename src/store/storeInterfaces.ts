@@ -25,6 +25,7 @@ export interface OrderStore {
 }
 
 export interface AuthStore {
+  email: string;
   username: string;
   password: string;
   setSignData: (data: Partial<AuthStore>) => void;

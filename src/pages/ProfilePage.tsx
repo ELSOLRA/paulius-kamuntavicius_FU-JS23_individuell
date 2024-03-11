@@ -1,4 +1,5 @@
-import SignupForm from "../components/Signup/SignupForm"
+import AuthForm from "../components/Signup/SignupForm"
+
 
 
 type Props = {}
@@ -6,7 +7,7 @@ type Props = {}
 const ProfilePage = (props: Props) => {
   return (
     <div>
-      <SignupForm />
+      <AuthForm defaultEndpoint='signup' />
     </div>
   )
 }

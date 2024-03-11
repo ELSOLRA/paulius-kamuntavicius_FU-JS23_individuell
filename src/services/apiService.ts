@@ -45,10 +45,10 @@ const getOrderStatus = async (orderNr: string) => {
     }
   };
 
-  const signupUser = async (userData: { username: string; password: string }) => {
+  const authenticateUser = async (userData: { username: string; password: string;  }, endpoint: string) => {
     
     try {
-      const response = await fetch(`${apiUrl}/api/user/signup`, {
+      const response = await fetch(`${apiUrl}/api/user/${endpoint}`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -69,4 +69,4 @@ const getOrderStatus = async (orderNr: string) => {
 
 
 
-export { submitOrder, getOrderStatus, signupUser };
+export { submitOrder, getOrderStatus, authenticateUser };
