@@ -5,8 +5,6 @@ export interface State {
     toggle: () => void;
 }
 
-
-
 export interface CartStore extends State {
   
   cartItems: MenuItem[];
@@ -19,5 +17,16 @@ export interface CartStore extends State {
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
   // calculateTotalPrice: () => void;
+}
+
+export interface OrderStore {
+  orderInfo: { orderNr: string } | null;
+  setOrder: (data: { orderNr: string } | null) => void;
+}
+
+export interface AuthStore {
+  username: string;
+  password: string;
+  setSignData: (data: Partial<AuthStore>) => void;
 }
 

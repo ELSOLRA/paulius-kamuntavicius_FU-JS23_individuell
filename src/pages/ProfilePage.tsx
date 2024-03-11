@@ -1,10 +1,13 @@
+import SignupForm from "../components/Signup/SignupForm"
 
 
 type Props = {}
 
 const ProfilePage = (props: Props) => {
   return (
-    <div>ProfilePage</div>
+    <div>
+      <SignupForm />
+    </div>
   )
 }
 
