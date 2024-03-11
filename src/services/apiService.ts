@@ -1,17 +1,26 @@
 
 const apiUrl = 'https://airbean-api-xjlcn.ondigitalocean.app';
 
-const submitOrder = async (orderData: any) => {
+const submitOrder = async (orderData: any, userToken?: string) => {
 
     try {
-        const response = await fetch (`${apiUrl}/api/beans/order`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'accept': 'application/json',
-            },
-            body: JSON.stringify(orderData),
-        });
+
+
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+      };
+      // Include user token in headers if available
+      if (userToken) {
+        headers['Authorization'] = `Bearer ${userToken}`;
+
+      }
+    
+      const response = await fetch(`${apiUrl}/api/beans/order`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(orderData),
+    });
 
         if (!response.ok) {
             throw new Error(`Error submitting : ${response.statusText}`);
@@ -26,14 +35,20 @@ const submitOrder = async (orderData: any) => {
 
 };
 
-const getOrderStatus = async (orderNr: string) => {
+const getOrderStatus = async (orderNr: string, userToken?: string) => {
     try {
-        const response = await fetch(`${apiUrl}/api/beans/order/status/${orderNr}`, {
-            method: 'GET',
-            headers: {
-              'accept': 'application/json',
-            },
-          });
+
+      const headers: Record<string, string> = {
+        'accept': 'application/json',
+      };
+      if (userToken) {
+        headers['Authorization'] = `Bearer ${userToken}`;
+      }
+  
+      const response = await fetch(`${apiUrl}/api/beans/order/status/${orderNr}`, {
+        method: 'GET',
+        headers,
+      });
 
           if (response.ok) {
             return await response.json();

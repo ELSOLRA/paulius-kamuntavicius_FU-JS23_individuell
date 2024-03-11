@@ -18,10 +18,34 @@ const StatusPage = () => {
   useEffect(() => {
     const fetchOrderStatus = async () => {
       try {
-        if (orderInfo?.orderNr) {
-          const response = await getOrderStatus(orderInfo.orderNr);
-          setStatusData(response);
+
+        const userListString = sessionStorage.getItem('userList') ?? '';
+
+        let userToken;
+
+        if (userListString) {
+          const userList = JSON.parse(userListString);
+
+          userToken = userList?.token;
+  
+          console.log('User Token:', userToken);
+        } else {
+          console.warn('User List is empty. No userToken available.');
         }
+
+        let orderResponse;
+
+        if (userToken && orderInfo?.orderNr) {
+    
+          orderResponse = await getOrderStatus(orderInfo.orderNr, userToken);
+
+          setStatusData(orderResponse);
+        }  else if (orderInfo?.orderNr) {
+          
+          orderResponse = await getOrderStatus(orderInfo.orderNr);
+          setStatusData(orderResponse);
+        } 
+    
       } catch (error) {
         console.error('Error fetching order status: ', error);
       }

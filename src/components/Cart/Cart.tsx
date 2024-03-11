@@ -23,6 +23,22 @@ const Cart = () => {
           return;
         } */
 
+        const userListString = sessionStorage.getItem('userList') ?? '';
+
+        let userToken;
+
+        if (userListString) {
+          const userList = JSON.parse(userListString);
+
+          userToken = userList?.token;
+  
+          console.log('User Token:', userToken);
+        } else {
+          console.warn('User List is empty. No userToken available.');
+        }
+
+        
+
         const orderData = {
           details: {
             order: cartItems.map((item) => ({
@@ -34,11 +50,19 @@ const Cart = () => {
 
         console.log("Order Data:", orderData);
 
-      const orderResponse = await submitOrder(orderData);
-      console.log(JSON.stringify(orderResponse, null, 1));
+        let orderResponse;
 
+    if (userToken) {
+    
+      orderResponse = await submitOrder(orderData, userToken);
+    }  else {
+      
+      orderResponse = await submitOrder(orderData);
+    } 
+
+    console.log(JSON.stringify(orderResponse, null, 1));
       if (orderResponse.orderNr) {
-        // Store the order information in the Zustand store
+     
         setOrder(orderResponse);
         resetCart();
         toggle();

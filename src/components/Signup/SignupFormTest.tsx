@@ -8,12 +8,11 @@ interface User {
   token?: string;
 }
 
-const AuthForm: React.FC<{ defaultEndpoint: 'signup' | 'login' }> = ({ defaultEndpoint }) => {
+const AuthFormTest: React.FC<{ defaultEndpoint: 'signup' | 'login' }> = ({ defaultEndpoint }) => {
   const { username, email, password, setSignData } = useAuthStore();
   const [showForm, setShowForm] = useState(true);
   const [endpoint, setEndpoint] = useState<'signup' | 'login'>(defaultEndpoint);
 
-  const userList: User[] = JSON.parse(localStorage.getItem('userList') || '[]');
   
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,22 +27,21 @@ const AuthForm: React.FC<{ defaultEndpoint: 'signup' | 'login' }> = ({ defaultEn
       console.log(response);
 
       if (response.success) {
-
+        const userList: User[] = JSON.parse(sessionStorage.getItem('userList') || '[]');
         if (endpoint === 'signup') {
           const userData = { username, email };
           console.log(userData);
           userList.push(userData); 
      
-          localStorage.setItem('userList', JSON.stringify(userList));
+          sessionStorage.setItem('userList', JSON.stringify(userList));
         } else {
           const userIndex = userList.findIndex((user) => user.username === username);
           if (userIndex !== -1) {
             // Update the user with the token
             userList[userIndex].token = response.token;
   
- /*            localStorage.setItem('userList', JSON.stringify(userList));   //can also be saved to the list of user  */
-            
-            sessionStorage.setItem('userList', JSON.stringify(userList[userIndex]));
+            // Save the updated userList to sessionStorage
+            sessionStorage.setItem('userList', JSON.stringify(userList));
   
             console.log(`Logged in as: ${userList[userIndex].username}, Email: ${userList[userIndex].email}`);
             console.log(`Token: ${userList[userIndex].token}`);
@@ -95,4 +93,4 @@ const AuthForm: React.FC<{ defaultEndpoint: 'signup' | 'login' }> = ({ defaultEn
   );
 };
 
-export default AuthForm;
+export default AuthFormTest;
