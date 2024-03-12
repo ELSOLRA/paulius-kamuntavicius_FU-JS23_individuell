@@ -25,10 +25,10 @@ const Nav: React.FC = () => {
       {isOpen && (
         <>
           <Link to='/' onClick={() => toggle()}>Let's land</Link>
-          <Link to='/menu' onClick={() => toggle()}>Menu</Link>
-          <Link to='/about' onClick={() => toggle()}>About</Link>
-          <Link to='/profile' onClick={() => toggle()}>Profile</Link>
-          <Link to='/status' onClick={() => toggle()}>Oder status</Link>
+          <Link to='/menu' onClick={() => toggle()}>Meny</Link>
+          <Link to='/about' onClick={() => toggle()}>Vårt kaffe</Link>
+          <Link to='/profile' onClick={() => toggle()}>Min profil</Link>
+          <Link to='/status' onClick={() => toggle()}>Oderstatus</Link>
        </>
       )}
          </nav>

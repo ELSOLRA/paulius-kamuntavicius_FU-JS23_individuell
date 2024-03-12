@@ -12,14 +12,12 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path='/' element={<HomePage />} />
+        <Route index element={<HomePage />} />
+        <Route path='/status' element={< StatusPage />} />
         <Route
           path='/menu'
-          element={
-            <>
-              {/* <Nav /> */}
+          element= {
               <MenuPage />
-            </>
           }
         />
         <Route
@@ -40,7 +38,6 @@ function App() {
             </>
           }
         />
-        <Route path='/status' element={< StatusPage />} />
       </Route>
     )
   )

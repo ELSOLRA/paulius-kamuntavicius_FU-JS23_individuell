@@ -1,3 +1,5 @@
+@import './abstracts/index';
+
 .menu-page {
     position: relative;
     width: 375px;
@@ -5,4 +7,5 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background: $bg-primary;
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { authenticateUser } from "../../services/apiService";
+import { authenticateUser, fetchOrderHistory } from "../../services/apiService";
 import useAuthStore from "../../store/authStore";
 
 interface User {
@@ -8,7 +8,24 @@ interface User {
   token?: string;
 }
 
-const AuthForm: React.FC<{ defaultEndpoint: 'signup' | 'login' }> = ({ defaultEndpoint }) => {
+export interface OrderHistoryItem {
+  total: number;
+  orderNr: string;
+  orderDate: string;
+}
+
+export interface OrderHistoryResponse {
+  success: boolean;
+  orderHistory?: OrderHistoryItem[];
+  error?: string;
+}
+
+interface AuthFormProps {
+  defaultEndpoint: 'signup' | 'login';
+  loginSuccess: (username: string, email: string, orderHistory: OrderHistoryItem[]) => void;
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) => {
   const { username, email, password, setSignData } = useAuthStore();
   const [showForm, setShowForm] = useState(true);
   const [endpoint, setEndpoint] = useState<'signup' | 'login'>(defaultEndpoint);
@@ -21,47 +38,78 @@ const AuthForm: React.FC<{ defaultEndpoint: 'signup' | 'login' }> = ({ defaultEn
     setSignData({ [name]: value });
   };
 
-  const handleAuth = async () => {
+  const handleSignup = async () => {
     try {
       console.log({ username, password });
-      const response = await authenticateUser({ username, password }, endpoint);
-      console.log(response);
+      const response = await authenticateUser({ username, password }, 'signup');
+      console.log("Signup response:", response);
 
       if (response.success) {
-
-        if (endpoint === 'signup') {
-          const userData = { username, email };
-          console.log(userData);
-          userList.push(userData); 
+        const userData = { username, email };
+        console.log("Data with sign up:", userData);
+        userList.push(userData);
+        localStorage.setItem('userList', JSON.stringify(userList));
+        
      
-          localStorage.setItem('userList', JSON.stringify(userList));
-        } else {
-          const userIndex = userList.findIndex((user) => user.username === username);
-          if (userIndex !== -1) {
-            // Update the user with the token
-            userList[userIndex].token = response.token;
-  
- /*            localStorage.setItem('userList', JSON.stringify(userList));   //can also be saved to the list of user  */
-            
-            sessionStorage.setItem('userList', JSON.stringify(userList[userIndex]));
-  
-            console.log(`Logged in as: ${userList[userIndex].username}, Email: ${userList[userIndex].email}`);
-            console.log(`Token: ${userList[userIndex].token}`);
-          } else {
-            console.error(`User not found for username: ${username}`);
-          }
-        }
-        setShowForm(false);
-        setSignData({ username: '', email: '', password: '' });
+        setEndpoint('login');
+        handleLogin();
+      } else {
+        console.error("Signup failed:", response.message);
       }
     } catch (error) {
-      console.error(`${endpoint} failed:`, error);
+      console.error("Signup failed:", error);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      console.log({ username, password });
+      const response = await authenticateUser({ username, password }, 'login');
+      console.log("Login response:", response);
+
+      if (response.success) {
+        const userIndex = userList.findIndex((user) => user.username === username);
+        if (userIndex !== -1) {
+          userList[userIndex].token = response.token;
+          sessionStorage.setItem('userList', JSON.stringify(userList[userIndex]));
+
+          console.log(`Logged in as: ${userList[userIndex].username}, Email: ${userList[userIndex].email}`);
+          console.log(`Token: ${userList[userIndex].token}`);
+          
+          const orderHistoryResponse: OrderHistoryResponse = await fetchOrderHistory(response.token);
+          console.log(`History item: ${orderHistoryResponse}`);
+          
+          if (orderHistoryResponse.success) {
+            loginSuccess(userList[userIndex].username, userList[userIndex].email, orderHistoryResponse.orderHistory as OrderHistoryItem[]);
+          } else {
+            console.error("Failed to fetch order history:", orderHistoryResponse.error);
+          }
+          
+        } else {
+          console.error(`User not found for username: ${username}`);
+        }
+
+        setShowForm(false);
+        setSignData({ username: '', email: '', password: '' });
+      } else {
+        console.error("Login failed:", response.message);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
     }
   };
 
   const toggleEndpoint = () => {
     setEndpoint(endpoint === 'signup' ? 'login' : 'signup');
     setShowForm(true);
+  };
+
+  const handleAuth = () => {
+    if (endpoint === 'signup') {
+      handleSignup();
+    } else {
+      handleLogin();
+    }
   };
 
   return (

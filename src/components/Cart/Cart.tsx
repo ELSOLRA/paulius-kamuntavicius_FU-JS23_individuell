@@ -41,12 +41,14 @@ const Cart = () => {
 
         const orderData = {
           details: {
-            order: cartItems.map((item) => ({
-              name: item.title,
-              price: item.price,
-            })),
-          },
-        };
+            order: cartItems.flatMap((item) =>
+          Array.from({ length: item.quantity ?? 0 }, () => ({
+            name: item.title,
+            price: item.price,
+          }))
+        ),
+      },
+    };
 
         console.log("Order Data:", orderData);
 
@@ -132,3 +134,6 @@ const Cart = () => {
 }
 
 export default Cart;
+
+
+

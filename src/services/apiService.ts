@@ -1,3 +1,4 @@
+import { OrderHistoryResponse } from "../components/Signup/SignupForm";
 
 const apiUrl = 'https://airbean-api-xjlcn.ondigitalocean.app';
 
@@ -10,7 +11,7 @@ const submitOrder = async (orderData: any, userToken?: string) => {
         'Content-Type': 'application/json',
         'accept': 'application/json',
       };
-      // Include user token in headers if available
+   
       if (userToken) {
         headers['Authorization'] = `Bearer ${userToken}`;
 
@@ -82,6 +83,35 @@ const getOrderStatus = async (orderNr: string, userToken?: string) => {
     }
   };
 
+  const fetchOrderHistory = async (userToken: string): Promise<OrderHistoryResponse> => {
+    try {
+
+      const headers: Record<string, string> = {
+        'accept': 'application/json',
+      };
+
+      if (userToken) {
+        headers['Authorization'] = `Bearer ${userToken}`;
+      }
+
+      const response = await fetch(`${apiUrl}/api/user/history`, {
+        method: 'GET',
+        headers,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Order History:', result.orderHistory);
+        return result;
+      } else {
+        console.error(`Error fetching History: ${response.statusText}`);
+      }
+    } catch (error: any) {
+      console.error(`Error fetching History: ${error.message}`);
+      throw new Error(`Error fetching History: ${error.message}`);
+    }
+    return { success: false, error: 'Unexpected error occurred' };
+  };
 
 
-export { submitOrder, getOrderStatus, authenticateUser };
+export { submitOrder, getOrderStatus, authenticateUser, fetchOrderHistory };
