@@ -5,6 +5,7 @@ import bagIcon from "../../assets/svg/bag.svg"
 import { useNavigate } from "react-router-dom";
 import { submitOrder } from "../../services/apiService";
 import useOrderStore from "../../store/orderStore";
+import "./cart.scss"
 
 
 
@@ -82,20 +83,20 @@ const Cart = () => {
 
   return (
     <section className="cart-section">
-      <section className="cart-header">
-        {totalItems > 0 && <span className="cart-header__item-count">{totalItems}</span>}
-        <button className="cart-header__btn" onClick={() => toggle()}>
+          <section className={`cart ${isOpen ? 'cart--overlay' : ''}`}>
+      <section className="cart__header">
+        {totalItems > 0 && <div className="cart__header-notification"><span className="cart__header-item-count">{totalItems}</span> </div>}
+        <button className="cart__header-btn" onClick={() => toggle()}>
           <img
-            className="cart-header__icon"
+            className="cart__header-icon"
             src={bagIcon}
             alt="shopping bag" />
 
         </button>
       </section>
-      <section className={`cart ${isOpen ? 'cart--overlay' : ''}`}>
 
         {isOpen && (
-          <section>
+          <section className="cart__content">
             <h2 className="cart__title">Din beställning</h2>
 
             {cartItems.length > 0 ? (

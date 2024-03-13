@@ -1,0 +1,62 @@
+.coffee-menu {
+
+   
+
+    &__title {
+
+        text-align: center;
+        font-size: 42px;
+        margin: 8px 0 20px;
+    }
+
+
+
+    &__list {
+
+        display: flex;
+        list-style: none;
+        flex-wrap: wrap;
+        width: 311px;
+        gap: 18px;
+        padding: 0;
+        margin: auto;
+    }
+
+
+
+    &__item {
+
+        display: flex;
+    }
+
+    &__add-icon {
+
+        padding-right: 1rem;
+    }
+
+    &__item-title {
+
+        font-size: 23px;
+
+        display: flex;
+        justify-content: space-between;
+        width: 16.4375rem;
+        text-wrap: nowrap;
+    }
+
+    &__item-price {
+
+        padding-left: 0.5rem;
+    }
+
+}
+
+
+
+.dots {
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: initial;
+
+
+}

@@ -1,11 +1,12 @@
 import AboutContent from "../components/About/AboutContent"
 import Footer from "../components/UI/Footer"
 import footerImage from "../assets/svg/footer-img.svg"
+import "../sass/pages.scss"
 
 
-type Props = {}
 
-const AboutPage = (props: Props) => {
+
+const AboutPage = () => {
   return (
     <section className="page-common about-section">
 

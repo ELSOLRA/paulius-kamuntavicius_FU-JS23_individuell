@@ -5,7 +5,7 @@ import addIcon from "../assets/svg/add.svg"
 
 import "../sass/menuPage.scss"
 import Footer from "../components/UI/Footer";
-import CoffeeMenuComponent from "../components/CoffeeMenuComponent";
+import CoffeeMenuComponent from "../components/CoffeeMenu/CoffeeMenuComponent";
 
 
 
