@@ -22,4 +22,4 @@ const Header: React.FC<HeaderProps> = ({ leftComponent, rightComponent, headerIm
   )
 }
 
-export default Header
+export default Header;
