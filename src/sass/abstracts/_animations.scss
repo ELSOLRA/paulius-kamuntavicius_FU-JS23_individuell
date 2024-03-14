@@ -1,10 +1,23 @@
 @keyframes smoothPulsing {
-    0%, 100% {
-      transform: scale(1);
-      border: 1.5rem solid transparent;
-    }
-    50% {
-      transform: scale(1.15);
-      border: 1.5rem solid rgba(0, 0, 0, 0.015);
-    }
+
+  0%,
+  100% {
+    transform: scale(1);
+    border: 1.5rem solid transparent;
   }
+
+  50% {
+    transform: scale(1.15);
+    border: 1.5rem solid rgba(0, 0, 0, 0.015);
+  }
+}
+
+@keyframes square-in-bottom-left {
+  from {
+    clip-path: inset(0 0 100% 100%);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}

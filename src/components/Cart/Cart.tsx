@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { submitOrder } from "../../services/apiService";
 import useOrderStore from "../../store/orderStore";
 import "./cart.scss"
+import ChevronUp from "../icons/ChevronUp";
+import ChevronDown from "../icons/ChevronDown";
+import Dots from "../common/Dots";
+import ActionButton from "../common/ActionButton/ActionButton";
 
 
 
@@ -83,7 +87,7 @@ const Cart = () => {
 
   return (
     <section className="cart-section">
-          <section className={`cart ${isOpen ? 'cart--overlay' : ''}`}>
+          <section className={`cart ${isOpen ? 'cart--overlay active' : ''}`}>
       <section className="cart__header">
         {totalItems > 0 && <div className="cart__header-notification"><span className="cart__header-item-count">{totalItems}</span> </div>}
         <button className="cart__header-btn" onClick={() => toggle()}>
@@ -100,31 +104,55 @@ const Cart = () => {
             <h2 className="cart__title">Din beställning</h2>
 
             {cartItems.length > 0 ? (
-
               <>
+              <section className="cart__wrapper">
                 <ul className="cart__items">
                   {cartItems.map((item) => (
-                    <li key={item.id}>
-                      <p className="cart__item-title">{item.title}</p>
-                      <p className="cart__item-price">{item.price} kr</p>
+                    <li key={item.id} className="cart__item">
+                      <section className="cart__item-info">
+                      <div>
+                      <h2 className="cart__item-title">{item.title}</h2>
+                      <p className="cart__item-price">{`${item.price} kr`}</p>
+                      </div>
+                      <div className="cart__item-dots">
+                      <Dots />
+                      </div>
                       <section className="cart__item-actions">
-                        <button className="cart__action" onClick={() => decreaseQuantity(item.id)}>-</button>
+                        <button className="cart__action vector-btn" onClick={() => increaseQuantity(item.id)}>
+                          <ChevronUp />
+                        </button>
                         <span className="cart__item-quantity">{item.quantity}</span>
-                        <button className="cart__action" onClick={() => increaseQuantity(item.id)}>+</button>
+                        <button className="cart__action vector-btn" onClick={() => decreaseQuantity(item.id)}>
+                          <ChevronDown />
+                        </button>
+                      </section>
                       </section>
 
                     </li>
                   ))}
                 </ul>
-                <p className="cart__total">Total: ${totalPrice}</p>
-                <p className="cart__extra-info">inkl moms + drönarleverans</p>
+                <section className="cart__summary">
+                  <section className="cart__total-section">
+                    <h2> Total </h2>
+                    <div className="cart__item-dots">
+                    <Dots />
+                    </div>
+                    <p className="cart__totalprice">{`${totalPrice} kr`}</p>
+                  </section>
+                  <section className="cart__info-section">
+                    <p className="cart__extra-info">inkl moms + drönarleverans</p>
+                  </section>
 
-                <button className="cart__order-btn" onClick={handleOrderSubmit}>
-                  Take my money
-                </button>
-              </>
+                </section>
+
+                </section>
+                    <ActionButton label="Take my money!" onClick={handleOrderSubmit} />
+                  </>
             ) : (
-              <p className="cart__empty-message">Tom Varukorg</p>
+              <>
+              <hr className="cart__empty-line" />
+              <p className="cart__empty-message">Din varukorg är tom</p>
+              </>
             )}
 
           </section>

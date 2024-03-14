@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import useNavStore from "../../../store/useNavStore";
-import '../../../sass/nav.scss'
+import './nav.scss'
 
 
 const Nav: React.FC = () => {
@@ -24,11 +24,13 @@ const Nav: React.FC = () => {
       <nav className="nav__links">
       {isOpen && (
         <>
-          <Link to='/' onClick={() => toggle()}>Let's land</Link>
-          <Link to='/menu' onClick={() => toggle()}>Meny</Link>
-          <Link to='/about' onClick={() => toggle()}>Vårt kaffe</Link>
-          <Link to='/profile' onClick={() => toggle()}>Min profil</Link>
-          <Link to='/status' onClick={() => toggle()}>Oderstatus</Link>
+          <Link to='/menu' className="nav__link" onClick={() => toggle()}>Meny</Link>
+          <hr className="nav__line" />
+          <Link to='/about' className="nav__link" onClick={() => toggle()}>Vårt kaffe</Link>
+          <hr className="nav__line" />
+          <Link to='/profile' className="nav__link" onClick={() => toggle()}>Min profil</Link>
+          <hr className="nav__line" />
+          <Link to='/status' className="nav__link" onClick={() => toggle()}>Oderstatus</Link>
        </>
       )}
          </nav>

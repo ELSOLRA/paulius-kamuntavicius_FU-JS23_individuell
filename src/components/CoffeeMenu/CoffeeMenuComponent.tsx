@@ -5,19 +5,11 @@ import Loader from "../common/Loader";
 import useCartStore from "../../store/useCartStore";
 import { MenuItem } from "../../store/storeTypes";
 import fetchCoffeeMenu from "../../services/coffeeMenuService";
+import Dots from "../common/Dots";
 
 type CoffeeMenuProp = {
     addIconPath: string;
 }
-
-const Dots = () => {
-  const maxDots = 100;
-  const dots = '.'.repeat(maxDots);
-
-  return <div className="dots">{dots}</div>;
-};
-
-
 
 const CoffeeMenuComponent: React.FC<CoffeeMenuProp> = ({addIconPath}) => {
     const { menu, setMenu } = useCoffeeMenuState();
