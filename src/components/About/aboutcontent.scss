@@ -1,0 +1,36 @@
+.about-content {
+
+    margin: 0 auto 47px;
+    display: flex;
+    width: 311px;
+    flex-direction: column;
+
+    &__title {
+        font-family: 'PT Serif';
+        line-height: 50.4px;
+        font-weight: 700;
+        font-size: 42px;
+        margin-top: 36px;
+    }
+
+    &__description {
+
+        font-family: 'Work Sans';
+        margin-bottom: 54px;
+    }
+
+    &__paragraph {
+
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 19.2px;
+
+        &--bold {
+
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 22.4px;
+        }
+    }
+
+}

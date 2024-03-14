@@ -2,7 +2,7 @@ import { useState } from "react";
 import { authenticateUser, fetchOrderHistory } from "../../services/apiService";
 import useAuthStore from "../../store/authStore";
 
-interface User {
+export interface User {
   username: string;
   email: string;
   token?: string;
@@ -29,6 +29,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
   const { username, email, password, setSignData } = useAuthStore();
   const [showForm, setShowForm] = useState(true);
   const [endpoint, setEndpoint] = useState<'signup' | 'login'>(defaultEndpoint);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const userList: User[] = JSON.parse(localStorage.getItem('userList') || '[]');
   
@@ -36,6 +37,26 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setSignData({ [name]: value });
+    validateInput(name, value);
+  };
+
+  const validateInput = (name: string, value: string) => {
+    const errorsCopy = { ...errors };
+    const usernameRegex = /^[a-zA-Z\s]{3,20}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (name === 'username' && !usernameRegex.test(value)) {
+      errorsCopy[name] = 'Användarnamn får endast innehålla bokstäver och mellanslag';
+    } else if (name === 'email' && !emailRegex.test(value)) {
+      errorsCopy[name] = 'Ange en giltig e-postadress';
+    } else if (name === 'password' && !passwordRegex.test(value)) {
+      errorsCopy[name] = 'Lösenord minst 8 tecken långt och innehålla minst en bokstav och en siffra.';
+    } else {
+      delete errorsCopy[name];
+    }
+
+    setErrors(errorsCopy);
   };
 
   const handleSignup = async () => {
@@ -104,28 +125,35 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
     setShowForm(true);
   };
 
-  const handleAuth = () => {
-    if (endpoint === 'signup') {
-      handleSignup();
-    } else {
-      handleLogin();
+  const handleAuth = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (Object.keys(errors).length === 0) {
+      if (endpoint === 'signup') {
+        await handleSignup();
+      } else {
+        await handleLogin();
+      }
     }
   };
 
+  
+
   return (
-    <>
+    <form onSubmit={handleAuth}>
       {showForm && (
         <section>
           <label>
             Username:
             <input type="text" name="username" value={username} onChange={handleInputChange} />
+            {errors.username && <div className="error">{errors.username}</div>}
           </label>
           <br />
           {endpoint === 'signup' && (
             <>
               <label>
-                Email:
+                Epost
                 <input type="email" name="email" value={email} onChange={handleInputChange} />
+                {errors.email && <div className="error">{errors.email}</div>}
               </label>
               <br />
             </>
@@ -133,13 +161,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
           <label>
             Password:
             <input type="password" name="password" value={password} onChange={handleInputChange} />
+            {errors.password && <div className="error">{errors.password}</div>}
           </label>
           <br />
-          <button onClick={handleAuth}>{endpoint === 'signup' ? 'Brew me a cup!' : 'Log In'}</button>
+          <button type="submit">{endpoint === 'signup' ? 'Brew me a cup!' : 'Log In'}</button>
           {endpoint === 'signup' && <button onClick={toggleEndpoint}>Logga In</button>}
         </section>
       )}
-    </>
+    </form>
   );
 };
 

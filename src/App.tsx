@@ -5,8 +5,9 @@ import HomePage from './pages/LandingPage';
 import MenuPage from './pages/MenuPage';
 import AboutPage from './pages/AboutPage';
 import ProfilePage from './pages/ProfilePage';
-import StatusPage from './pages/StatusPage';
+
 import Root from './pages/RootPage';
+import StatusPage from './pages/StatusPage';
 
 function App() {
   const router = createBrowserRouter(

@@ -1,0 +1,88 @@
+@use '../../sass/abstracts/index' as*;
+
+
+.status-info {
+
+    @include FlexColumn;
+
+    &__order-number {
+
+        margin: 62px auto auto;
+        width: 279px;
+        height: 37px;
+        @include ParagraphsFontCustom (16px, 19.2px, rgba(255, 255, 255, 0.7));
+        @include FlexRow;
+        
+        .order-number {
+            font-weight: 700;
+        }
+    }
+
+    &__drone-container {
+
+        margin-top: 40px;
+        width: 279px;
+        height:119.06px;
+        
+        
+        .drone-image {
+
+            width: 100%;
+            height: 100%;
+    }
+        
+    }
+
+    &__heading {
+
+        margin-top: 41px ;
+        width: 279px;
+        height: 125px;
+        @include HeadersFontCustom (36px, 43.2px, white);
+        @include FlexRow;
+
+       
+    }
+
+    &__eta {
+
+        width: 279px;
+        height: 37px;
+        @include ParagraphsFontCustom (21px, 25.2px, white);
+        @include FlexRow;
+
+        .eta {
+
+            @include ParagraphsFontCustom (22px, 26.4px, white);
+            font-weight: 700;
+            padding-right: 8px;
+            
+        }
+    }
+
+    &__no-status {
+        @include FlexColumn;
+        padding: 6rem 0;
+
+
+    
+    }
+    &__message {
+        font-size: 1.3rem;
+        font-weight: 700;
+        line-height: 3rem;
+        text-align: center;
+    }
+    .action-btn {
+
+        margin: 69px 0 auto;
+        background-color: white ;
+        color:rgba(47, 41, 38);
+        width: 184px;
+        height: 55px;
+
+    }
+} 
+
+
+

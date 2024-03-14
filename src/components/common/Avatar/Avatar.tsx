@@ -1,3 +1,4 @@
+import "./avatar.scss"
 
 interface AvatarProps {
 

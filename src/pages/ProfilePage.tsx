@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import AuthForm, { OrderHistoryItem } from "../components/Signup/SignupForm"
+import Avatar from "../components/common/Avatar/Avatar";
+import profilImg from "../assets/png/ProfileIcon.png"
 
 
 
-type Props = {};
 
 
 
-const ProfilePage = (props: Props) => {
+const ProfilePage = () => {
 
   const [userInfo, setUserInfo] = useState<{ username: string; email: string } | null>(null);
   const [orderHistory, setOrderHistory] = useState<OrderHistoryItem[]>([]);
   const [ totalSpent, setTotalSpent ] = useState<number | null>(null);
+  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const handleLoginSuccess = (username: string, email: string, orderHistory: OrderHistoryItem[]) => {
     setUserInfo({ username, email });
     setOrderHistory(orderHistory);
     const newTotalSpent = orderHistory.reduce((total, item) => total + item.total, 0);
     setTotalSpent(newTotalSpent);
+    // setIsLoggedIn(true);
   };
 
   useEffect(() => {
@@ -29,13 +32,18 @@ const ProfilePage = (props: Props) => {
   }, [userInfo, orderHistory]);
 
   
-
   return (
     <div>
       {userInfo ? (
         <>
-          <p>{userInfo.username}!</p>
-          <p>{userInfo.email}</p>
+        <Avatar 
+        size={'big'}
+        avatar={profilImg}
+        name={userInfo.username}
+        addlInfo= {userInfo.email}
+        textmode={'second'}
+
+        />
           <br/>
           <p>Order History:</p>
           <ul>
