@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { authenticateUser, fetchOrderHistory } from "../../services/apiService";
-import useAuthStore from "../../store/authStore";
+import { authenticateUser, fetchOrderHistory } from "../../../services/apiService";
+import useAuthStore from "../../../store/authStore";
+import "./signupForm.scss"
+import { AuthFormProps, OrderHistoryItem, OrderHistoryResponse } from "./SignupForm-Interfaces";
+import BeanLogoIcon from "../../icons/BeanLogo";
 
 export interface User {
   username: string;
@@ -8,28 +11,16 @@ export interface User {
   token?: string;
 }
 
-export interface OrderHistoryItem {
-  total: number;
-  orderNr: string;
-  orderDate: string;
-}
 
-export interface OrderHistoryResponse {
-  success: boolean;
-  orderHistory?: OrderHistoryItem[];
-  error?: string;
-}
 
-interface AuthFormProps {
-  defaultEndpoint: 'signup' | 'login';
-  loginSuccess: (username: string, email: string, orderHistory: OrderHistoryItem[]) => void;
-}
+
 
 const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) => {
   const { username, email, password, setSignData } = useAuthStore();
   const [showForm, setShowForm] = useState(true);
   const [endpoint, setEndpoint] = useState<'signup' | 'login'>(defaultEndpoint);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [gdpr, setGdpr] = useState(false); 
 
   const userList: User[] = JSON.parse(localStorage.getItem('userList') || '[]');
   
@@ -127,6 +118,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
   const handleAuth = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (!gdpr) {
+      setErrors({ ...errors, gdpr: 'Du måste acceptera GDPR-villkoren.' });
+      return; 
+    }
+
     if (Object.keys(errors).length === 0) {
       if (endpoint === 'signup') {
         await handleSignup();
@@ -136,39 +133,74 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
     }
   };
 
-  
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setGdpr(isChecked);
+
+    if (isChecked) {
+      setErrors({ ...errors, gdpr: '' });
+    }
+  };
+
+ 
 
   return (
-    <form onSubmit={handleAuth}>
-      {showForm && (
-        <section>
-          <label>
-            Username:
-            <input type="text" name="username" value={username} onChange={handleInputChange} />
-            {errors.username && <div className="error">{errors.username}</div>}
-          </label>
-          <br />
-          {endpoint === 'signup' && (
-            <>
-              <label>
-                Epost
-                <input type="email" name="email" value={email} onChange={handleInputChange} />
-                {errors.email && <div className="error">{errors.email}</div>}
-              </label>
-              <br />
-            </>
-          )}
-          <label>
-            Password:
-            <input type="password" name="password" value={password} onChange={handleInputChange} />
-            {errors.password && <div className="error">{errors.password}</div>}
-          </label>
-          <br />
-          <button type="submit">{endpoint === 'signup' ? 'Brew me a cup!' : 'Log In'}</button>
-          {endpoint === 'signup' && <button onClick={toggleEndpoint}>Logga In</button>}
-        </section>
-      )}
-    </form>
+    <section className="auth-wrapper">
+      <section className="auth__header">
+        <BeanLogoIcon />
+        <h2 className="auth__header--title">
+          {endpoint === 'signup' ? 'Välkommen till AirBean-familjen!' : 'Välkommen!'}
+        </h2>
+        <p className="auth__header--additonal-info">
+          {endpoint === 'signup' ? 'Genom att skapa ett konto nedan kan du spara och se din orderhistorik.' : ' Logga in.'}
+        </p>
+      </section>
+
+      <form onSubmit={handleAuth} className="auth-form">
+        {showForm && (
+          <section className="auth-form__section">
+            <label className="auth-form__label">
+              Namn
+              <input type="text" name="username" value={username} onChange={handleInputChange} className="auth-form__input" />
+              {errors.username && <div className="auth-form__error">{errors.username}</div>}
+            </label>
+
+            {endpoint === 'signup' && (
+              <>
+                <label className="auth-form__label">
+                  Epost
+                  <input type="email" name="email" value={email} onChange={handleInputChange} className="auth-form__input" />
+                  {errors.email && <div className="auth-form__error">{errors.email}</div>}
+                </label>
+
+              </>
+            )}
+            <label className="auth-form__label">
+              Password:
+              <input type="password" name="password" value={password} onChange={handleInputChange} className="auth-form__input" />
+              {errors.password && <div className="auth-form__error">{errors.password}</div>}
+            </label>
+            <div className="auth-form__input-section">
+              <div className="auth-form__inputfield--circle">
+                <input
+                  onChange={onChange}
+                  checked={gdpr}
+                  type="checkbox"
+                  id="gdpr"
+                  className="auth-form__inputfield--checkbox"
+                />
+                <label htmlFor="gdpr" className="auth-form__round" id="circle" />
+                <p className="auth-form__inputfield--label">GDPR Ok!</p>
+              </div>
+              {errors?.gdpr && <div className="auth-form__error-message gdpr">{errors.gdpr}</div>}
+            </div>
+
+            <button type="submit" className="auth-form__submit">{endpoint === 'signup' ? 'Brew me a cup!' : 'Log In'}</button>
+            {endpoint === 'signup' && <button className="auth-form__button" onClick={toggleEndpoint}>Logga In</button>}
+          </section>
+        )}
+      </form>
+    </section>
   );
 };
 

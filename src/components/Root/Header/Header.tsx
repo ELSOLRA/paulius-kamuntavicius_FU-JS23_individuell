@@ -1,17 +1,17 @@
-import "../../../sass/header.scss"
+
 import { HeaderProps } from "./headerTypes"
 
 
 
 
-const Header: React.FC<HeaderProps> = ({ leftComponent, rightComponent, headerImage }) => {
+const Header: React.FC<HeaderProps> = ({ leftComponent, rightComponent, headerImage, className }) => {
 
     const headerStyle = {
         backgroundImage: `url(${headerImage})`,
     }
 
   return (
-      <header className="header" style={headerStyle}>
+      <header className={`header ${className}`} style={headerStyle}>
           <section className="header__left">
               {leftComponent && <>{leftComponent}</>}
           </section>

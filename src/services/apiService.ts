@@ -1,4 +1,4 @@
-import { OrderHistoryResponse } from "../components/Signup/SignupForm";
+import { OrderHistoryResponse } from "../components/Signup/SignForm/SignupForm";
 
 const apiUrl = 'https://airbean-api-xjlcn.ondigitalocean.app';
 

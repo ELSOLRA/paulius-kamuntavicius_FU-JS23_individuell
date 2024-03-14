@@ -18,11 +18,12 @@ const Root: React.FC = () => {
     const leftComponent = <Nav />;
 
     const rightComponent = pathname === '/menu' ? <Cart /> : null;
+    const headerClass = pathname === '/profile' ? 'profile-header' : '';
 
     return (
       <>
         <section className="rootpage">
-          <Header headerImage={headerImage} leftComponent={leftComponent} rightComponent={rightComponent}  />
+          <Header headerImage={headerImage} leftComponent={leftComponent} rightComponent={rightComponent} className={headerClass} />
           <main className={mainContentClass}>
             <Outlet />
           </main>

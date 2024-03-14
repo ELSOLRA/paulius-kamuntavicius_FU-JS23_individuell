@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import AuthForm, { OrderHistoryItem } from "../components/Signup/SignupForm"
-import Avatar from "../components/common/Avatar/Avatar";
-import profilImg from "../assets/png/ProfileIcon.png"
-
+import AuthForm, { OrderHistoryItem } from "../components/Signup/SignForm/SignupForm"
+import ProfileInfo from "../components/Signup/Profile/ProfileInfo";
+import "../sass/profilepage.scss"
 
 
 
@@ -31,28 +30,12 @@ const ProfilePage = () => {
     }
   }, [userInfo, orderHistory]);
 
-  
-  return (
-    <div>
-      {userInfo ? (
-        <>
-        <Avatar 
-        size={'big'}
-        avatar={profilImg}
-        name={userInfo.username}
-        addlInfo= {userInfo.email}
-        textmode={'second'}
 
-        />
-          <br/>
-          <p>Order History:</p>
-          <ul>
-            {orderHistory.map((item) => (
-              <li key={item.orderNr}>Order #{item.orderNr}, Date: {item.orderDate}, Total: {item.total}</li>
-            ))}
-          </ul>
-          <p>Total {totalSpent}!</p>
-        </>
+  return (
+    <div className="page-common  profile-section">
+      {userInfo ? (
+        <ProfileInfo userInfo={userInfo} orderHistory={orderHistory} totalSpent={totalSpent} />
+
       ) : (
         <AuthForm defaultEndpoint="signup" loginSuccess={handleLoginSuccess} />
       )}

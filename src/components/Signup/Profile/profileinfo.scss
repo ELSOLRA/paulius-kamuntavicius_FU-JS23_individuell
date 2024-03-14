@@ -1,0 +1,97 @@
+@use '../../../sass/abstracts/index' as *;
+
+.user-profile {
+
+    width: 315px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    .profile-info {
+        margin-top: 10px;
+
+
+        &__name {
+
+            width: 315px;
+            height: 31px;
+            @include HeadersFontCustom(24px, 28.8px, white);
+            margin-top:10px;
+        }
+        &__desc {
+
+            width: 279px;
+            height: 31px;
+            @include ParagraphsFontCustom(14px, 16.8px, rgba(255, 255, 255, 0.8));
+            @include FlexColumn;
+        }
+    }
+
+        &__title {
+    
+            margin-top: 65px;
+            width: 279px;
+            height: 31px;
+            @include HeadersFontCustom(22px, 26.4px, white);
+            text-align:start;
+            margin-bottom: 7px;
+    }
+
+    &__order-history {
+
+        list-style: none;
+        padding: 0;
+        overflow: scroll;
+        
+    }
+    &__order-history-item {
+
+        width: 315px;
+        height: 44px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) ;
+        margin-top: 8px;
+
+    }
+    &__order-details {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    &__order-number,
+    &__order-date {
+
+        @include ParagraphsFontCustom(14px, 16.8px, $profileItemTitle);
+
+    }
+    &__order-number {
+
+        font-weight: 700;
+    }
+    &__order-total-label,
+    &__order-total {
+
+        @include ParagraphsFontCustom(12px, 14.4px, $profileItem )
+    }
+    &__total-spent {
+
+        border-top: 1px solid rgba(255, 255, 255, 0.6) ;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 315px;
+        height: 28.5px;
+        @include ParagraphsFontCustom(14px, 16.8px, rgba(255, 255, 255, 0.8));
+        font-weight: 700;
+        margin-bottom: auto;
+        
+    }
+}
+
+
+
+
+
+
+
