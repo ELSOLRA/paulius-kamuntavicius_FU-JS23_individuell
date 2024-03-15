@@ -1,7 +1,8 @@
+import { MouseEventHandler } from "react";
 import "./actionbutton.scss"
 
 interface ActionButtonProps {
-  onClick: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   label: string;
 }
 

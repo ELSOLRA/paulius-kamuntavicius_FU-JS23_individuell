@@ -2,32 +2,39 @@ import { create } from "zustand";
 import { CartStore } from "./storeInterfaces";
 import { MenuItem } from "./storeTypes";
 
-
-const calculateTotals = (cartItems: MenuItem[]): { totalItems: number; totalPrice: number } => {
-  const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
-  const totalPrice = cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0);
-  return { totalItems, totalPrice }
+const calculateTotals = (
+  cartItems: MenuItem[]
+): { totalItems: number; totalPrice: number } => {
+  const totalItems = cartItems.reduce(
+    (total, item) => total + (item.quantity || 0),
+    0
+  );
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + (item.price || 0) * (item.quantity || 0),
+    0
+  );
+  return { totalItems, totalPrice };
 };
 
-const findItem =(items: MenuItem[], id: string) => {
+const findItem = (items: MenuItem[], id: string) => {
   const foundItem = items.find((item) => item.id === id);
 
   console.log("Found Item:", foundItem);
   return foundItem;
-}
-
+};
 
 const useCartStore = create<CartStore>((set) => ({
   isOpen: false,
   cartItems: [],
-  
+
   totalPrice: 0,
   totalItems: 0,
-  toggle: () => set((state) => ({ isOpen: !state.isOpen, showCartItems: !state.isOpen })),
-  
+  toggle: () =>
+    set((state) => ({ isOpen: !state.isOpen, showCartItems: !state.isOpen })),
+
   addToCart: (item: MenuItem) => {
     set((state) => {
-      const existingItem = findItem(state.cartItems, item.id)
+      const existingItem = findItem(state.cartItems, item.id);
 
       let updatedCartItems;
 
@@ -43,7 +50,11 @@ const useCartStore = create<CartStore>((set) => ({
 
       const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
 
-      return { cartItems: updatedCartItems, totalPrice, totalItems } as CartStore;
+      return {
+        cartItems: updatedCartItems,
+        totalPrice,
+        totalItems,
+      } as CartStore;
     });
   },
 
@@ -68,19 +79,18 @@ const useCartStore = create<CartStore>((set) => ({
         )
         .filter((item) => (item.quantity || 0) > 0);
 
-        const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
+      const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
 
       return { cartItems: updatedCartItems, totalPrice, totalItems };
     });
   },
 }));
 
-
 export const resetCart = () => {
   useCartStore.setState({
     cartItems: [],
     totalItems: 0,
-    totalPrice: 0, 
+    totalPrice: 0,
   });
 };
 

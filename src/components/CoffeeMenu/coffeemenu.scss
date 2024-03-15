@@ -5,8 +5,8 @@
     &__title {
 
         text-align: center;
-        font-size: 42px;
-        margin: 8px 0 20px;
+        font-size: 2.625rem; 
+        margin: 0.5rem 0 1.25rem;
     }
 
 
@@ -16,18 +16,16 @@
         display: flex;
         list-style: none;
         flex-wrap: wrap;
-        width: 311px;
-        gap: 18px;
+        width: 19.4375rem; 
+        gap: 1.125rem;
         padding: 0;
         margin: auto;
     }
 
-
-
     &__item {
 
         display: flex;
-        padding-bottom: 15px;
+        padding-bottom: 0.9375rem;
     }
 
     &__add-icon {
@@ -37,7 +35,7 @@
 
     &__item-title {
 
-        font-size: 23px;
+        font-size: 1.4375rem;
 
         display: flex;
         justify-content: space-between;

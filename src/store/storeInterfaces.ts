@@ -1,22 +1,17 @@
 import { MenuItem } from "./storeTypes";
 
 export interface State {
-    isOpen: boolean;
-    toggle: () => void;
+  isOpen: boolean;
+  toggle: () => void;
 }
 
 export interface CartStore extends State {
-  
   cartItems: MenuItem[];
-  
-  totalPrice: number 
+  totalPrice: number;
   totalItems: number;
-  // toggleCartItems: () => void;
   addToCart: (item: MenuItem) => void;
-  // updateCartItem: (id: string, quantity: number) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
-  // calculateTotalPrice: () => void;
 }
 
 export interface OrderStore {
@@ -30,4 +25,3 @@ export interface AuthStore {
   password: string;
   setSignData: (data: Partial<AuthStore>) => void;
 }
-

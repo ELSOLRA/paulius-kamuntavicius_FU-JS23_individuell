@@ -1,4 +1,3 @@
-
 import OrderStatus from "../components/Status/OrderStatus";
 import "../sass/pages.scss"
 import "../sass/statuspage.scss"

@@ -7,10 +7,10 @@
 
     &__order-number {
 
-        margin: 62px auto auto;
-        width: 279px;
-        height: 37px;
-        @include ParagraphsFontCustom (16px, 19.2px, rgba(255, 255, 255, 0.7));
+        margin: 3.875rem auto auto; 
+        width: 17.4375rem; 
+        height: 2.3125rem;
+        @include ParagraphsFontCustom(1rem, 1.2rem, rgba(255, 255, 255, 0.7));
         @include FlexRow;
         
         .order-number {
@@ -20,9 +20,8 @@
 
     &__drone-container {
 
-        margin-top: 40px;
-        width: 279px;
-        height:119.06px;
+        margin-top: 2.5rem; 
+        width: 17.4375rem; 
         
         
         .drone-image {
@@ -35,10 +34,10 @@
 
     &__heading {
 
-        margin-top: 41px ;
-        width: 279px;
-        height: 125px;
-        @include HeadersFontCustom (36px, 43.2px, white);
+        margin-top: 2.5625rem; 
+        width: 17.4375rem; 
+        height: 7.8125rem; 
+        @include HeadersFontCustom(2.25rem, 2.7rem, white);
         @include FlexRow;
 
        
@@ -46,16 +45,16 @@
 
     &__eta {
 
-        width: 279px;
-        height: 37px;
-        @include ParagraphsFontCustom (21px, 25.2px, white);
+        width: 17.4375rem; 
+        height: 2.3125rem; 
+        @include ParagraphsFontCustom(1.3125rem, 1.575rem, white);
         @include FlexRow;
 
         .eta {
 
             @include ParagraphsFontCustom (22px, 26.4px, white);
             font-weight: 700;
-            padding-right: 8px;
+            padding-right: 0.5rem;
             
         }
     }
@@ -75,11 +74,11 @@
     }
     .action-btn {
 
-        margin: 69px 0 auto;
+        margin: 4.3125rem 0 auto;
         background-color: white ;
         color:rgba(47, 41, 38);
-        width: 184px;
-        height: 55px;
+        width: 11.5rem; 
+        height: 3.4375rem;
 
     }
 } 

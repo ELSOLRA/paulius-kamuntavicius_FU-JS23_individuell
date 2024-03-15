@@ -1,11 +1,11 @@
 .action-btn {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
-    width: 248px;
-    height: 55px;
+    width: 15.5rem; 
+    height: 3.4375rem;
     background-color: rgba(47, 41, 38);
     color: rgba(255, 255, 255);
-    border-radius: 50px;
+    border-radius: 3.125rem;
     border: none;
     cursor: pointer;
  
@@ -13,8 +13,8 @@
 
 .action-btn:hover {
     background-color: #333;
-    transform: translate(2px, 1px);
-    outline: 2px solid #33333388;
+    transform: translate(0.125rem, 0.0625rem);
+    outline: 0.125rem solid #33333388;
     transition: transform 300ms ease-in-out, outline 0.3s ease-in-out;
     
   }

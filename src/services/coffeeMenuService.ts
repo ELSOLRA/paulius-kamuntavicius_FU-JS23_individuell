@@ -1,6 +1,6 @@
-const fetchCoffeeMenu = async (/* setLoading: React.Dispatch<React.SetStateAction<boolean>> */) => {
+const fetchCoffeeMenu = async () => {
     try {
-    //   setLoading(true);
+  
   
   const response = await fetch('https://airbean-api-xjlcn.ondigitalocean.app/api/beans/', {
         headers: {

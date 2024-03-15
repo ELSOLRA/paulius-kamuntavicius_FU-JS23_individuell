@@ -1,6 +1,4 @@
 import useCartStore, { resetCart } from "../../store/useCartStore";
-import { CartProps } from "./cartTypes";
-import "../../sass/cart.scss"
 import bagIcon from "../../assets/svg/bag.svg"
 import { useNavigate } from "react-router-dom";
 import { submitOrder } from "../../services/apiService";
@@ -11,22 +9,15 @@ import ChevronDown from "../icons/ChevronDown";
 import Dots from "../common/Dots";
 import ActionButton from "../common/ActionButton/ActionButton";
 
-
-
 const Cart = () => {
    
-    const { isOpen, toggle, decreaseQuantity, increaseQuantity, /* toggleCartItems, */  cartItems, totalPrice, totalItems } = useCartStore();
+    const { isOpen, toggle, decreaseQuantity, increaseQuantity, cartItems, totalPrice, totalItems } = useCartStore();
     const navigate = useNavigate();
     const { setOrder } = useOrderStore();
 
     const handleOrderSubmit = async() => {
 
       try {
-
-/*         if (cartItems.length === 0) {
-          console.warn('Cart is empty');
-          return;
-        } */
 
         const userListString = sessionStorage.getItem('userList') ?? '';
 
@@ -37,12 +28,10 @@ const Cart = () => {
 
           userToken = userList?.token;
   
-          console.log('User Token:', userToken);
+          
         } else {
-          console.warn('User List is empty. No userToken available.');
-        }
 
-        
+        }
 
         const orderData = {
           details: {
@@ -54,8 +43,6 @@ const Cart = () => {
         ),
       },
     };
-
-        console.log("Order Data:", orderData);
 
         let orderResponse;
 
@@ -83,9 +70,7 @@ const Cart = () => {
       }
     };
 
-    
-
-  return (
+   return (
     <section className="cart-section">
           <section className={`cart ${isOpen ? 'cart--overlay active' : ''}`}>
       <section className="cart__header">

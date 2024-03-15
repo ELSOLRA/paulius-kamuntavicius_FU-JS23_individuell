@@ -2,13 +2,13 @@
 
 .auth-wrapper {
     position: absolute;
-    width: 341px;
-    height: 566px;
+    width: 21.3125rem; 
+    height: 35.375rem;
     background: beige;
-    transform: translate(17px, -42px);
+    transform: translate(1.0625rem, -2.625rem); 
     background-color: rgba(243, 228, 225, 1);
     box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.55);
-    border-radius: 3px;
+    border-radius: 0.1875rem;
 
 }
 
@@ -18,54 +18,109 @@
 
     >img {
 
-        margin-top: 32px;
+        margin-top: 2rem;
     }
 
     &--title {
 
-        width: 309px;
-        height: 97px;
-        @include HeadersFontCustom(32px, 38.4px, $profileBackgr )
+        width: 19.3125rem; 
+        height: 6.0625rem; 
+        @include HeadersFontCustom(2rem, 2.4rem, $profileBackgr);
     }
 
     &--additonal-info {
 
-        width: 305px;
-        height: 56px;
-        @include ParagraphsFontCustom(16px, 24px, $profileBackgr)
+        width: 19.0625rem; 
+        height: 3.5rem; 
+        @include ParagraphsFontCustom(1rem, 1.5rem, $profileBackgr);
     }
 
 }
 
 .auth-form {
 
+
     &__section {
 
         @include FlexColumn;
-        gap: 1rem;
+
+        .action-btn {
+            margin: 0.1875rem 0; 
+            height: 2.8125rem;
+        }
 
     }
 
     &__label {
-
+        
+        margin: 0.2rem;
         display: flex;
-        width: 310px;
-        height: 48px;
+        width: 19.375rem; 
+        height: 3.75rem; 
         flex-direction: column;
-        @include ParagraphsFontCustom(12px, 14.4px, $profileBackgr);
+        @include ParagraphsFontCustom(0.75rem, 0.9rem, $profileBackgr); 
         text-align: justify;
+        gap: 0.25rem; 
     }
 
     &__input {
 
-        height: 48px;
-        padding: 5px;
-        border-radius: 3px;
-        border: 1px solid $profileBackgr;
+        height: 3rem; 
+        padding: 0.3125rem;
+        border-radius: 0.1875rem; 
+        border: 0.0625rem solid $profileBackgr; 
     }
 
     &__input-section {
         align-self: flex-start;
         margin-left: 1.1rem;
     }
+
+    &__checkbox-section{
+
+        align-self: baseline;
+        margin-left: 1.1rem;
+
+    }
+
+    &__checkbox {
+
+        margin-top: 1.4375rem; 
+        display: flex;
+        gap: 0.5625rem;
+
+        &--input{
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: white;
+            border-radius: 50%;
+            border: 0.0625rem solid white;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: 0.0625rem solid black;
+            transform: translateY(0.1875rem);
+            cursor: pointer
+        }
+        &--input:checked {
+            background-color: rgba(14, 146, 125, 1)
+        }
+        &--label {
+
+            @include ParagraphsFontCustom(0.75rem, 0.9rem, $profileBackgr);
+        }
+    }
+
+    &__error{
+
+        @include ParagraphsFontCustom(0.75rem, 0.9rem, red);
+        text-align: left;
+    }
+
 }
+
+.form-btns {
+
+    @include FlexColumn;
+}
+

@@ -6,12 +6,8 @@ import { getOrderStatus } from "../../services/apiService";
 import ActionButton from "../common/ActionButton/ActionButton";
 import "./orderstatus.scss"
 
-
-
-
-
 const OrderStatus = () => {
-  // const { state } = useLocation() as { state: { orderResponse: any; statusData: any } };
+
   const navigate = useNavigate();
   const { orderInfo } = useOrderStore();
 
@@ -29,8 +25,7 @@ const OrderStatus = () => {
           const userList = JSON.parse(userListString);
 
           userToken = userList?.token;
-  
-          console.log('User Token:', userToken);
+       
         } else {
           console.warn('User List is empty. No userToken available.');
         }
@@ -38,16 +33,16 @@ const OrderStatus = () => {
         let orderResponse;
 
         if (userToken && orderInfo?.orderNr) {
-    
+
           orderResponse = await getOrderStatus(orderInfo.orderNr, userToken);
 
           setStatusData(orderResponse);
-        }  else if (orderInfo?.orderNr) {
-          
+        } else if (orderInfo?.orderNr) {
+
           orderResponse = await getOrderStatus(orderInfo.orderNr);
           setStatusData(orderResponse);
-        } 
-    
+        }
+
       } catch (error) {
         console.error('Error fetching order status: ', error);
       }
@@ -81,13 +76,13 @@ const OrderStatus = () => {
               </span>
             </p>
             <div className="status-info__drone-container">
-            <img className="drone-image" src={droneImg} alt="Dron" />
+              <img className="drone-image" src={droneImg} alt="Dron" />
             </div>
 
             <h2 className="status-info__heading">Din beställning är på väg!</h2>
             {statusData && <p className="status-info__eta">
               <span className="eta">
-                {`${statusData.eta || 0} `} 
+                {`${statusData.eta || 0} `}
               </span>
               {statusData.eta === 1 ? "minut" : "minuter"}
             </p>}

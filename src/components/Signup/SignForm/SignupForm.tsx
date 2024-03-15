@@ -4,6 +4,7 @@ import useAuthStore from "../../../store/authStore";
 import "./signupForm.scss"
 import { AuthFormProps, OrderHistoryItem, OrderHistoryResponse } from "./SignupForm-Interfaces";
 import BeanLogoIcon from "../../icons/BeanLogo";
+import ActionButton from "../../common/ActionButton/ActionButton";
 
 export interface User {
   username: string;
@@ -11,19 +12,15 @@ export interface User {
   token?: string;
 }
 
-
-
-
-
 const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) => {
   const { username, email, password, setSignData } = useAuthStore();
   const [showForm, setShowForm] = useState(true);
   const [endpoint, setEndpoint] = useState<'signup' | 'login'>(defaultEndpoint);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [gdpr, setGdpr] = useState(false); 
+  const [gdpr, setGdpr] = useState(false);
 
   const userList: User[] = JSON.parse(localStorage.getItem('userList') || '[]');
-  
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,17 +49,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
   const handleSignup = async () => {
     try {
-      console.log({ username, password });
-      const response = await authenticateUser({ username, password }, 'signup');
-      console.log("Signup response:", response);
+            const response = await authenticateUser({ username, password }, 'signup');
+    
 
       if (response.success) {
         const userData = { username, email };
-        console.log("Data with sign up:", userData);
+   
         userList.push(userData);
         localStorage.setItem('userList', JSON.stringify(userList));
-        
-     
+
+
         setEndpoint('login');
         handleLogin();
       } else {
@@ -75,7 +71,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
   const handleLogin = async () => {
     try {
-      console.log({ username, password });
+
       const response = await authenticateUser({ username, password }, 'login');
       console.log("Login response:", response);
 
@@ -85,18 +81,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
           userList[userIndex].token = response.token;
           sessionStorage.setItem('userList', JSON.stringify(userList[userIndex]));
 
-          console.log(`Logged in as: ${userList[userIndex].username}, Email: ${userList[userIndex].email}`);
-          console.log(`Token: ${userList[userIndex].token}`);
-          
           const orderHistoryResponse: OrderHistoryResponse = await fetchOrderHistory(response.token);
-          console.log(`History item: ${orderHistoryResponse}`);
-          
+
           if (orderHistoryResponse.success) {
             loginSuccess(userList[userIndex].username, userList[userIndex].email, orderHistoryResponse.orderHistory as OrderHistoryItem[]);
           } else {
             console.error("Failed to fetch order history:", orderHistoryResponse.error);
           }
-          
+
         } else {
           console.error(`User not found for username: ${username}`);
         }
@@ -121,7 +113,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
     if (!gdpr) {
       setErrors({ ...errors, gdpr: 'Du måste acceptera GDPR-villkoren.' });
-      return; 
+      return;
     }
 
     if (Object.keys(errors).length === 0) {
@@ -142,7 +134,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
     }
   };
 
- 
 
   return (
     <section className="auth-wrapper">
@@ -176,27 +167,28 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
               </>
             )}
             <label className="auth-form__label">
-              Password:
+              Lösenord:
               <input type="password" name="password" value={password} onChange={handleInputChange} className="auth-form__input" />
               {errors.password && <div className="auth-form__error">{errors.password}</div>}
             </label>
-            <div className="auth-form__input-section">
-              <div className="auth-form__inputfield--circle">
+            <div className="auth-form__checkbox-section">
+
+              <div className="auth-form__checkbox" >
                 <input
                   onChange={onChange}
                   checked={gdpr}
                   type="checkbox"
                   id="gdpr"
-                  className="auth-form__inputfield--checkbox"
+                  className="auth-form__checkbox--input"
                 />
-                <label htmlFor="gdpr" className="auth-form__round" id="circle" />
-                <p className="auth-form__inputfield--label">GDPR Ok!</p>
+                <p className="auth-form__checkbox--label">GDPR Ok!</p>
               </div>
-              {errors?.gdpr && <div className="auth-form__error-message gdpr">{errors.gdpr}</div>}
+              {errors?.gdpr && <div className="auth-form__error">{errors.gdpr}</div>}
             </div>
-
-            <button type="submit" className="auth-form__submit">{endpoint === 'signup' ? 'Brew me a cup!' : 'Log In'}</button>
-            {endpoint === 'signup' && <button className="auth-form__button" onClick={toggleEndpoint}>Logga In</button>}
+            <div className="form-btns">
+              <ActionButton label={endpoint === 'signup' ? 'Brew me a cup!' : 'Log In'} />
+              {endpoint === 'signup' && <ActionButton onClick={toggleEndpoint} label="Logga In" />}
+            </div>
           </section>
         )}
       </form>
