@@ -1,20 +1,23 @@
 import { useState } from "react";
-import { authenticateUser, fetchOrderHistory } from "../../../services/apiService";
+import { authenticateUser, /* fetchOrderHistory */ } from "../../../services/apiService";
 import useAuthStore from "../../../store/authStore";
 import "./signupForm.scss"
-import { AuthFormProps, OrderHistoryItem, OrderHistoryResponse } from "./SignupForm-Interfaces";
+import { AuthFormProps, OrderHistoryItem, /* OrderHistoryResponse */ } from "./SignupForm-Interfaces";
 import BeanLogoIcon from "../../icons/BeanLogo";
 import ActionButton from "../../common/ActionButton/ActionButton";
+import { useLoggedStore } from "../../../store/loggedStore";
 
 export interface User {
   username: string;
   email: string;
   token?: string;
+  orderHistory?: OrderHistoryItem[];
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) => {
+const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, /* loginSuccess, */ signupSuccess }) => {
   const { username, email, password, setSignData } = useAuthStore();
-  const [showForm, setShowForm] = useState(true);
+  const { isLoggedIn, login } = useLoggedStore();
+  // const [showForm, setShowForm] = useState(true);
   const [endpoint, setEndpoint] = useState<'signup' | 'login'>(defaultEndpoint);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [gdpr, setGdpr] = useState(false);
@@ -51,6 +54,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
     const hasErrors = Object.keys(errorsCopy).length > 0;
     setErrors(errorsCopy);
+    console.log('error :  ', errorsCopy)
 
     return hasErrors;
   };
@@ -70,7 +74,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
 
         setEndpoint('login');
-        handleLogin();
+        signupSuccess(username, email);
+        // setShowForm(false);
+        handleLogin(username, password);
       } else {
         console.error("Signup failed:", response.message);
       }
@@ -79,31 +85,45 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (username: string, password: string) => {
     try {
 
       const response = await authenticateUser({ username, password }, 'login');
-
+      console.log('procceding to login', response.success);
+      
 
       if (response.success) {
         const userIndex = userList.findIndex((user) => user.username === username);
+        console.log('found user index in local storage ', userIndex)
+        console.log(`user got toke :  ${response.token}`);
+        
         if (userIndex !== -1) {
           userList[userIndex].token = response.token;
+        
           sessionStorage.setItem('userList', JSON.stringify(userList[userIndex]));
 
-          const orderHistoryResponse: OrderHistoryResponse = await fetchOrderHistory(response.token);
+          login();
 
+          /* let orderHistoryResponse: OrderHistoryResponse;
+          const orderHistoryExists = userList[userIndex]?.orderHistory?.length ?? 0;
+          if (orderHistoryExists) {
+            // Fetches order history if it exists
+            orderHistoryResponse = await fetchOrderHistory(response.token);
+          } else {
+            orderHistoryResponse = { success: false, error: "User has no order history" };
+          }
           if (orderHistoryResponse.success) {
             loginSuccess(userList[userIndex].username, userList[userIndex].email, orderHistoryResponse.orderHistory as OrderHistoryItem[]);
+            console.log('whats inside loginSuccess: ' ,{loginSuccess})
           } else {
             console.error("Failed to fetch order history:", orderHistoryResponse.error);
-          }
+          } */
 
         } else {
           console.error(`User not found for username: ${username}`);
         }
 
-        setShowForm(false);
+        // setShowForm(false);
         setSignData({ username: '', email: '', password: '' });
       } else {
         console.error("Login failed:", response.message);
@@ -115,7 +135,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
   const toggleEndpoint = () => {
     setEndpoint(endpoint === 'signup' ? 'login' : 'signup');
-    setShowForm(true);
+    // setShowForm(true);
   };
 
   const handleAuth = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -135,10 +155,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
         await handleSignup();
       } else {
         console.log("Calling handleLogin");
-        await handleLogin();
+        await handleLogin(username, password);
       }
     } else {
       console.log("Validation errors detected. Form Submission Blocked.");
+      console.log(hasErrors);
+      
     }
   };
 
@@ -153,7 +175,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
 
   };
   return (
-    showForm && (
+    !isLoggedIn && (
       <section className="auth-wrapper">
         <section className="auth__header">
           <BeanLogoIcon />
@@ -166,7 +188,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ defaultEndpoint, loginSuccess }) =>
         </section>
 
         <form onSubmit={handleAuth} className="auth-form">
-          {showForm && (
+          {!isLoggedIn && (
             <section className="auth-form__section">
               <label className="auth-form__label">
                 Namn

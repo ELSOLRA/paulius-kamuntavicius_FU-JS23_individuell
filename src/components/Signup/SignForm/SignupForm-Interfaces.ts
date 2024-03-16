@@ -13,5 +13,6 @@ export interface OrderHistoryItem {
 
 export interface AuthFormProps {
     defaultEndpoint: 'signup' | 'login';
-    loginSuccess: (username: string, email: string, orderHistory: OrderHistoryItem[]) => void;
+    // loginSuccess: (username: string, email: string, orderHistory: OrderHistoryItem[]) => void;
+    signupSuccess: (username: string, email: string) => void;
   }

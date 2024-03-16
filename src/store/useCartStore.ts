@@ -19,25 +19,24 @@ const calculateTotals = (
 const findItem = (items: MenuItem[], id: string) => {
   const foundItem = items.find((item) => item.id === id);
 
-  console.log("Found Item:", foundItem);
   return foundItem;
 };
 
 const useCartStore = create<CartStore>((set) => ({
   isOpen: false,
   cartItems: [],
-
   totalPrice: 0,
   totalItems: 0,
   toggle: () =>
     set((state) => ({ isOpen: !state.isOpen, showCartItems: !state.isOpen })),
 
   addToCart: (item: MenuItem) => {
+    console.log('added item to cart: ',item)
     set((state) => {
       const existingItem = findItem(state.cartItems, item.id);
 
       let updatedCartItems;
-
+ 
       if (existingItem) {
         updatedCartItems = state.cartItems.map((cartItem) =>
           cartItem.id === item.id
@@ -47,7 +46,7 @@ const useCartStore = create<CartStore>((set) => ({
       } else {
         updatedCartItems = [...state.cartItems, { ...item, quantity: 1 }];
       }
-
+ 
       const { totalItems, totalPrice } = calculateTotals(updatedCartItems);
 
       return {

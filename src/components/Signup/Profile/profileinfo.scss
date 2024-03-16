@@ -36,6 +36,10 @@
         text-align: start;
         margin-bottom: 0.4375rem
     }
+    &__no-history {
+        @include HeadersFontCustom(1.375rem, 1.65rem, white); 
+        padding: 1rem;
+    }
 
     &__order-history {
 

@@ -10,13 +10,18 @@ interface UserInfo {
   }
   
   interface ProfileInfoProps {
-    userInfo: UserInfo;
+    userInfo: UserInfo | null;
     orderHistory: OrderHistoryItem[];
     totalSpent: number | null;
   }
 
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ userInfo, orderHistory, totalSpent }) => {
+
+  if (!userInfo) {
+    return <div className="noUserInfo">No user information available.</div>;
+  }
+
     return (
       <section className="user-profile">
         <Avatar

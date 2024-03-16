@@ -23,5 +23,7 @@ export interface AuthStore {
   email: string;
   username: string;
   password: string;
+  showForm: boolean;
   setSignData: (data: Partial<AuthStore>) => void;
+  setShowForm: (value: boolean) => void;
 }

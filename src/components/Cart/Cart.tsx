@@ -43,19 +43,24 @@ const Cart = () => {
         ),
       },
     };
-
+        console.log('orderdata:', orderData);
+        
         let orderResponse;
 
     if (userToken) {
-    
+    console.log(userToken);
+    console.log('Oder to send:' ,orderData)
       orderResponse = await submitOrder(orderData, userToken);
     }  else {
       
       orderResponse = await submitOrder(orderData);
+      console.log('response:', orderResponse);
+      
     } 
 
     console.log(JSON.stringify(orderResponse, null, 1));
       if (orderResponse.orderNr) {
+     console.log('order nr:', orderResponse.orderNr);
      
         setOrder(orderResponse);
         resetCart();

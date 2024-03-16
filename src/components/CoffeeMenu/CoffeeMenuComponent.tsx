@@ -37,6 +37,7 @@ const CoffeeMenuComponent: React.FC<CoffeeMenuProp> = ({ addIconPath }) => {
 
   const handleClick = (item: MenuItem) => {
     addToCart(item);
+    
   };
 
   return (
