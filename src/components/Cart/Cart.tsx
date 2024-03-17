@@ -1,8 +1,8 @@
-import useCartStore, { resetCart } from "../../store/useCartStore";
+import useCartStore, { resetCart } from "../../store/CartStore";
 import bagIcon from "../../assets/svg/bag.svg"
 import { useNavigate } from "react-router-dom";
 import { submitOrder } from "../../services/apiService";
-import useOrderStore from "../../store/orderStore";
+import useOrderStore from "../../store/OrderStore";
 import "./cart.scss"
 import ChevronUp from "../icons/ChevronUp";
 import ChevronDown from "../icons/ChevronDown";

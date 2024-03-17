@@ -1,4 +1,5 @@
-import { OrderHistoryResponse } from "../components/Signup/SignForm/SignupForm";
+import { OrderHistoryResponse } from "../components/Signup/SignForm/SignupForm-Interfaces";
+
 
 const apiUrl = 'https://airbean-api-xjlcn.ondigitalocean.app';
 
@@ -114,4 +115,30 @@ const getOrderStatus = async (orderNr: string, userToken?: string) => {
   };
 
 
-export { submitOrder, getOrderStatus, authenticateUser, fetchOrderHistory };
+const authTokenStatus = async (userToken: string): Promise<boolean> => {
+    try {
+
+      const response = await fetch(`${apiUrl}/api/user/status`, {
+        headers: {
+          'accept': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+        method: 'GET',
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        return result.success;
+
+    } else {
+      console.error("User response status error:", response.statusText);
+      return false;
+    }
+
+    } catch (error) {
+      console.error("Error fetching user status:", error);
+      return false;
+    }
+  };
+
+export { submitOrder, getOrderStatus, authenticateUser, fetchOrderHistory, authTokenStatus };

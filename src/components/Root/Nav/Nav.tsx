@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useNavStore from "../../../store/useNavStore";
+import useNavStore from "../../../store/NavStore";
 import './nav.scss'
 
 const Nav: React.FC = () => {

@@ -4,7 +4,7 @@ import ProfileInfo from "../components/Signup/Profile/ProfileInfo";
 import "../sass/profilepage.scss"
 import { OrderHistoryItem, OrderHistoryResponse } from "../components/Signup/SignForm/SignupForm-Interfaces";
 import { useLoggedStore } from "../store/loggedStore";
-import { fetchOrderHistory } from "../services/apiService";
+import { authTokenStatus, fetchOrderHistory } from "../services/apiService";
 
 
 const ProfilePage = () => {
@@ -13,19 +13,6 @@ const ProfilePage = () => {
   const [orderHistory, setOrderHistory] = useState<OrderHistoryItem[]>([]);
   const [ totalSpent, setTotalSpent ] = useState<number | null>(null);
   const {isLoggedIn, logout} = useLoggedStore()
-  
- 
-
-/*   const handleLoginSuccess = (username: string, email: string, orderHistory: OrderHistoryItem[]) => {
-    
-    setUserInfo({ username, email });
-    console.log('info pick up from logginSucces:', userInfo);
-    
-    setOrderHistory(orderHistory);
-    const newTotalSpent = orderHistory.reduce((total, item) => total + item.total, 0);
-    setTotalSpent(newTotalSpent);
-  
-  }; */
   
 
   const handleSignupSuccess = (username: string, email: string) => {
@@ -40,44 +27,55 @@ const ProfilePage = () => {
     setTotalSpent(null);
   };
 
-/*   useEffect(() => {
-
-    const authToken = JSON.parse(sessionStorage.getItem('userList') ?? '')?.token;
-    if (authToken) {
-
+  const fetchUserOrderHistory = async (token: string) => {
+    try {
+      const orderHistoryResponse: OrderHistoryResponse = await fetchOrderHistory(token);
+      console.log('fetchorderhisory response: ', orderHistoryResponse);
+      if (orderHistoryResponse.success) {
+        setOrderHistory(orderHistoryResponse.orderHistory || []);
+        const newTotalSpent = orderHistory.reduce((total, item) => total + item.total, 0);
+        setTotalSpent(newTotalSpent);
+      } else {
+        console.error("Failed to fetch order history:", orderHistoryResponse.error);
+      }
+    } catch (error) {
+      console.error("Error fetching order history:", error);
     }
-  }, []); */
+  };
+
+  const checkTokenValidity = async (token: string) => {
+    console.log(' token in checkTokenValdity: ', token)
+    if (token) {
+      const isValidToken = await authTokenStatus(token);
+      console.log('token validation response:', isValidToken);
+      
+      if (!isValidToken) {
+        console.log('token is not valid proceeding to log out', !isValidToken);
+        
+        handleLogout();
+        return;
+      }
+    } else {
+      console.error("No authToken found in user data.");
+      return;
+    }
+  };
+
 
   useEffect(() => {
     if (isLoggedIn) {
         const currentUser = JSON.parse(sessionStorage.getItem('userList') || '{}');
         if (currentUser) {
-            setUserInfo(currentUser);
-            console.log('This user-info that should be set to state :', currentUser);
-            
-            const authToken = currentUser.token;
+          const authToken = currentUser.token;
+
+          checkTokenValidity(authToken);
+         
+          
             console.log('authToken:',authToken);
-            
-            const fetchUserOrderHistory = async (token: string) => {
-                try {
-                    const orderHistoryResponse: OrderHistoryResponse = await fetchOrderHistory(token);
-
-                    console.log('fetchorderhisory response: ' ,orderHistoryResponse)
-
-                    if (orderHistoryResponse.success) {
-                        setOrderHistory(orderHistoryResponse.orderHistory || []);
-                        const newTotalSpent = orderHistory.reduce((total, item) => total + item.total, 0);
-                        setTotalSpent(newTotalSpent);
-                    } else {
-                        console.error("Failed to fetch order history:", orderHistoryResponse.error);
-                    }
-                } catch (error) {
-                    console.error("Error fetching order history:", error);
-                }
-            };
-
+            console.log('This user-info that should be set to state :', currentUser);
             if (authToken) {
                 fetchUserOrderHistory(authToken);
+                setUserInfo(currentUser);
             } else {
                 console.error("No authToken found in user data.");
             }
@@ -116,4 +114,4 @@ const ProfilePage = () => {
 };
 
 
-export default ProfilePage
+export default ProfilePage;

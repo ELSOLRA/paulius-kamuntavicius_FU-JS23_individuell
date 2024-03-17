@@ -10,117 +10,127 @@
     box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.55);
     border-radius: 0.1875rem;
 
-}
-
-.auth__header {
-
-    @include FlexColumn;
-
-    >img {
-
-        margin-top: 2rem;
-    }
-
-    &--title {
-
-        width: 19.3125rem; 
-        height: 6.0625rem; 
-        @include HeadersFontCustom(2rem, 2.4rem, $profileBackgr);
-    }
-
-    &--additonal-info {
-
-        width: 19.0625rem; 
-        height: 3.5rem; 
-        @include ParagraphsFontCustom(1rem, 1.5rem, $profileBackgr);
-    }
-
-}
-
-.auth-form {
-
-
-    &__section {
-
+    .auth__header {
+    
         @include FlexColumn;
+    
+        >img {
+    
+            margin-top: 2rem;
+        }
+    
+        &--title {
+    
+            width: 19.3125rem; 
+            height: 6.0625rem; 
+            @include HeadersFontCustom(2rem, 2.4rem, $profileBackgr);
+        }
+    
+        &--additonal-info {
+    
+            width: 19.0625rem; 
+            height: 3.5rem; 
+            @include ParagraphsFontCustom(1rem, 1.5rem, $profileBackgr);
+        }
+    
+    }
+    .auth-form {
+    
+    
+        &__section {
+    
+            @include FlexColumn;
+    
+            .form-btn {
+            
+                @include FlexColumn;
+            }
+            .action-btn {
+                margin: 0.1875rem 0; 
+                height: 2.8125rem;
+            }
+    
+        }
+    
+        &__label {
+            
+            margin: 0.2rem;
+            display: flex;
+            width: 19.375rem; 
+            height: 3.75rem; 
+            flex-direction: column;
+            @include ParagraphsFontCustom(0.75rem, 0.9rem, $profileBackgr); 
+            text-align: justify;
+            gap: 0.25rem; 
+        }
+    
+        &__input {
+    
+            height: 3rem; 
+            padding: 0.3125rem;
+            border-radius: 0.1875rem; 
+            border: 0.0625rem solid $profileBackgr; 
+        }
+    
+        &__input-section {
+            align-self: flex-start;
+            margin-left: 1.1rem;
+        }
+    
+        &__checkbox-section{
+    
+            align-self: baseline;
+            margin-left: 1.1rem;
+    
+        }
+    
+        &__checkbox {
+            
+            margin-top: 1.4375rem; 
+            display: flex;
+            gap: 0.5625rem;
+            
+            &--input{
+                width: 0.75rem;
+                height: 0.75rem;
+                background-color: white;
+                border-radius: 50%;
+                border: 0.0625rem solid white;
+                box-sizing: border-box;
+                appearance: none;
+                -webkit-appearance: none;
+                outline: 0.0625rem solid black;
+                transform: translateY(0.1875rem);
+                cursor: pointer
+            }
+            &--input:checked {
+                background-color: rgba(14, 146, 125, 1)
+            }
+            &--label {
+                
+                @include ParagraphsFontCustom(0.75rem, 0.9rem, $profileBackgr);
+            }
+        }
+        
+        &__error{
+    
+            @include ParagraphsFontCustom(0.75rem, 0.9rem, red);
+            text-align: left;
+        }
+    
+    }
+    .toggle-btn {
+    
+        @include FlexRow;
 
         .action-btn {
             margin: 0.1875rem 0; 
             height: 2.8125rem;
         }
-
     }
-
-    &__label {
-        
-        margin: 0.2rem;
-        display: flex;
-        width: 19.375rem; 
-        height: 3.75rem; 
-        flex-direction: column;
-        @include ParagraphsFontCustom(0.75rem, 0.9rem, $profileBackgr); 
-        text-align: justify;
-        gap: 0.25rem; 
-    }
-
-    &__input {
-
-        height: 3rem; 
-        padding: 0.3125rem;
-        border-radius: 0.1875rem; 
-        border: 0.0625rem solid $profileBackgr; 
-    }
-
-    &__input-section {
-        align-self: flex-start;
-        margin-left: 1.1rem;
-    }
-
-    &__checkbox-section{
-
-        align-self: baseline;
-        margin-left: 1.1rem;
-
-    }
-
-    &__checkbox {
-
-        margin-top: 1.4375rem; 
-        display: flex;
-        gap: 0.5625rem;
-
-        &--input{
-            width: 0.75rem;
-            height: 0.75rem;
-            background-color: white;
-            border-radius: 50%;
-            border: 0.0625rem solid white;
-            box-sizing: border-box;
-            appearance: none;
-            -webkit-appearance: none;
-            outline: 0.0625rem solid black;
-            transform: translateY(0.1875rem);
-            cursor: pointer
-        }
-        &--input:checked {
-            background-color: rgba(14, 146, 125, 1)
-        }
-        &--label {
-
-            @include ParagraphsFontCustom(0.75rem, 0.9rem, $profileBackgr);
-        }
-    }
-
-    &__error{
-
-        @include ParagraphsFontCustom(0.75rem, 0.9rem, red);
-        text-align: left;
-    }
-
 }
 
-.form-btns {
 
-    @include FlexColumn;
-}
+
+
 

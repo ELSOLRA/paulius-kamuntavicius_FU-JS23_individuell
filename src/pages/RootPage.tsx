@@ -3,7 +3,7 @@ import Header from "../components/Root/Header/Header";
 import Nav from "../components/Root/Nav/Nav";
 import headerImage from "../assets/svg/header-img.svg"
 import Cart from "../components/Cart/Cart";
-import useNavStore from "../store/useNavStore";
+import useNavStore from "../store/NavStore";
 import "../sass/rootpage.scss"
 
 

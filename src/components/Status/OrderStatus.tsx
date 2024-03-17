@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import droneImg from "../../assets/svg/drone.svg"
-import useOrderStore from "../../store/orderStore";
+import useOrderStore from "../../store/OrderStore";
 import { useEffect, useState } from "react";
 import { getOrderStatus } from "../../services/apiService";
 import ActionButton from "../common/ActionButton/ActionButton";

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import useCoffeeMenuState from "../../store/useCoffeeMenuStore";
+import useCoffeeMenuState from "../../store/CoffeeMenuStore";
 import "./coffeemenu.scss"
 import Loader from "../common/Loader";
-import useCartStore from "../../store/useCartStore";
+import useCartStore from "../../store/CartStore";
 import { MenuItem } from "../../store/storeTypes";
 import fetchCoffeeMenu from "../../services/coffeeMenuService";
 import Dots from "../common/Dots";
